@@ -22,7 +22,7 @@ class Block {
         unresolvedBlock.containsKey("timestamp") &&
         unresolvedBlock.containsKey("previousHash")
     ) {
-      this.data = unresolvedBlock["data"];
+      this.data = TransactionList.fromList(unresolvedBlock["data"]);
       this.creator = unresolvedBlock["creator"];
       this.signature = unresolvedBlock["signature"];
       this.timestamp = unresolvedBlock["timestamp"];

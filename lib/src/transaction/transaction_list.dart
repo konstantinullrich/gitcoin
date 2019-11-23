@@ -3,6 +3,14 @@ import 'package:gitcoin/gitcoin.dart';
 class TransactionList {
   List<Transaction> _trx = [];
 
+  TransactionList();
+
+  TransactionList.fromList(List unresolvedTrxList) {
+    for (Map trx in unresolvedTrxList) {
+      _trx.add(Transaction.fromMap(trx));
+    }
+  }
+
   int get length => _trx.length;
 
   void add(Transaction trx) => this._trx.add(trx);

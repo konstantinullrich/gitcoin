@@ -1,5 +1,4 @@
-github_user:
-  - konstantinullrich
+github_user: konstantinullrich
 
 rootdir: ./
 rsa-ssh:

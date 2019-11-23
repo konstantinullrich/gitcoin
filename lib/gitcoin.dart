@@ -11,9 +11,11 @@ export 'src/transaction/wallet.dart';
 
 // Networking
 export 'src/networking/broadcaster.dart';
+export 'src/networking/github_worker.dart';
 
 // Storage Manger
 export 'src/storage/storage_manager.dart';
 
 // Utils
 export 'src/utils/rsa_pem.dart';
+export 'src/utils/blockchain_tools.dart';

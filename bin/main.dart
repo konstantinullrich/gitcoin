@@ -3,13 +3,14 @@ import 'dart:isolate';
 
 import 'package:gitcoin/gitcoin.dart';
 
+Wallet wallet = Wallet.fromRandom();
+StorageManager storageManager = StorageManager("./storage/");
+String githubUser = "konstantinullrich12";
+
 void runBlockchainValidator(dynamic d) {
-  StorageManager storageManager = StorageManager("./storage/");
-  Wallet wallet = Wallet.fromRandom();
   Blockchain blockchain = Blockchain(wallet, storageManager);
   storageManager.storeBlockchain(blockchain);
   while(true) {
-    print(storageManager.pendingTransactions.length);
     if (storageManager.pendingTransactions.length > 2) {
       blockchain.createBlock();
     } else {
@@ -18,7 +19,17 @@ void runBlockchainValidator(dynamic d) {
   }
 }
 
+void runGithubHandler(dynamic d) {
+  String publicKey = RsaKeyHelper.encodePublicKeyToString(wallet.publicKey);
+  GithubWorker githubWorker = GithubWorker(githubUser, publicKey, storageManager);
+  while(true) {
+    githubWorker.generateRevenue();
+    sleep(Duration(minutes: 1));
+  }
+}
+
 void main() {
   ReceivePort receivePort= ReceivePort();
-  var t = Isolate.spawn(runBlockchainValidator, receivePort.sendPort);
+  Future<Isolate> blockchainValidator = Isolate.spawn(runBlockchainValidator, receivePort.sendPort);
+  Future<Isolate> githubHandler = Isolate.spawn(runGithubHandler, receivePort.sendPort);
 }
