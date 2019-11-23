@@ -64,16 +64,16 @@ class StorageManager {
 
   void storePendingTransaction(Transaction trx) {
     String filename = "${trx.toHash()}.trx";
-    File file = File("${this._pendingTransactions}/$filename");
+    File file = File("${this._pendingTransactions.path}/$filename");
     if (!file.existsSync()) file.createSync();
-    file.writeAsString(jsonEncode(trx.toMap()));
+    file.writeAsStringSync(jsonEncode(trx.toMap()));
   }
 
   void storePendingBlock(Block blc) {
     String filename = "${blc.toHash()}.blc";
-    File file = File("${this._pendingBlocks}/$filename");
+    File file = File("${this._pendingBlocks.path}/$filename");
     if (!file.existsSync()) file.createSync();
-    file.writeAsString(jsonEncode(blc.toMap()));
+    file.writeAsStringSync(jsonEncode(blc.toMap()));
   }
 
   List<Block> get pendingBlocks {
@@ -99,10 +99,10 @@ class StorageManager {
   void storeBlockchain(Blockchain blc_chn) {
     for (Block blc in blc_chn.chain) {
       String filename = "${blc.toHash()}.blc";
-      File file = File("${this.blockchain}/$filename");
+      File file = File("${this.blockchain.path}/$filename");
       if (!file.existsSync()) {
         file.createSync();
-        file.writeAsString(jsonEncode(blc.toMap()));
+        file.writeAsStringSync(jsonEncode(blc.toMap()));
       }
     }
   }

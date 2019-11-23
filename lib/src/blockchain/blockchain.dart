@@ -1,12 +1,19 @@
 import 'dart:core';
+import 'dart:math';
 
 import 'package:gitcoin/gitcoin.dart';
 
 class Blockchain {
+  int difficulty = 5;
+  int maxNonce = pow(2, 32);
   Wallet creatorWallet;
   Broadcaster broadcaster;
   StorageManager storageManager;
   List<Block> chain = [];
+
+  String get _proofOfWork {
+    return List(this.difficulty).join('').replaceAll('null', '0');
+  }
 
   /// Returns the Hash of the last Block of the Blockchain
   String get _previousHash => this.chain.last.toHash();
@@ -21,7 +28,7 @@ class Blockchain {
     Block last_block = this.chain.first;
     for (int i = 1; i < this.chain.length; i++) {
       Block block = this.chain[i];
-      if (block.previousHash != last_block.toHash() || !block.isValid) {
+      if (block.previousHash != last_block.toHash()|| !block.toHash().startsWith(this._proofOfWork) || !block.isValid) {
         return false;
       }
       last_block = block;
@@ -44,7 +51,10 @@ class Blockchain {
   void _addBlock(Block block) {
     chain.add(block);
     storageManager.storeBlockchain(this);
-    this.broadcaster.broadcast({"method": "NEW_BLOCK", "block": block.toMap()});
+    if (this.broadcaster != null) {
+      this.broadcaster.broadcast(
+          {"method": "NEW_BLOCK", "block": block.toMap()});
+    }
   }
 
   /// Create a Block and add it to the ever growing Blockchain
@@ -54,8 +64,14 @@ class Blockchain {
     storageManager.deletePendingTransactions();
     block.previousHash = this._previousHash;
     block.signBlock(this.creatorWallet.privateKey);
-    this._addBlock(block);
-
+    for (int i = 0; i < this.maxNonce; i++) {
+      if (block.toHash().startsWith(this._proofOfWork)) {
+        this._addBlock(block);
+        return;
+      } else {
+        block.nuance += 1;
+      }
+    }
   }
 
   /// Resolve Conflicts occurred in any other process

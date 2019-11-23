@@ -9,6 +9,7 @@ class Block {
   String previousHash = "0x0";
   String creator = "";
   String signature = "";
+  int nuance = 0;
   int timestamp = DateTime.now().millisecondsSinceEpoch;
 
   Block(this.data, this.creator);
@@ -60,7 +61,9 @@ class Block {
   }
 
   String toString() {
-    return this.creator +
+    return
+        this.nuance.toString() +
+        this.creator +
         this.data.toString() +
         this.previousHash +
         this.timestamp.toString();
