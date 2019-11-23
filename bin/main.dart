@@ -7,9 +7,10 @@ Wallet wallet = Wallet.fromRandom();
 StorageManager storageManager = StorageManager("./storage/");
 String githubUser = "konstantinullrich12";
 int webPort = 3000;
+Broadcaster broadcaster = Broadcaster([]);
 
 void runBlockchainValidator(dynamic d) {
-  Blockchain blockchain = Blockchain(wallet, storageManager);
+  Blockchain blockchain = Blockchain(wallet, storageManager, broadcaster: broadcaster);
   storageManager.storeBlockchain(blockchain);
   while(true) {
     if (storageManager.pendingTransactions.length > 2) {
@@ -22,7 +23,7 @@ void runBlockchainValidator(dynamic d) {
 
 void runGithubHandler(dynamic d) {
   String publicKey = RsaKeyHelper.encodePublicKeyToString(wallet.publicKey);
-  GithubWorker githubWorker = GithubWorker(githubUser, publicKey, storageManager);
+  GithubWorker githubWorker = GithubWorker(githubUser, publicKey, storageManager, broadcaster);
   while(true) {
     githubWorker.generateRevenue();
     sleep(Duration(minutes: 1));

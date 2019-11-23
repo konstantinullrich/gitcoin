@@ -7,8 +7,9 @@ class GithubWorker {
   final String username;
   final String publicKey;
   final StorageManager storageManager;
+  final Broadcaster broadcaster;
 
-  GithubWorker(this.username, this.publicKey, this.storageManager);
+  GithubWorker(this.username, this.publicKey, this.storageManager, this.broadcaster);
 
   getPullRequests() async {
     String url = 'https://api.github.com/search/issues?q=author:$username+is:pr+is:merged';
@@ -29,6 +30,7 @@ class GithubWorker {
         openTrx.add(Transaction(from_url, this.publicKey, score));
     }
     for (Transaction trx in openTrx) {
+      broadcaster.broadcast("/transaction", trx.toMap());
       storageManager.storePendingTransaction(trx);
     }
   }
