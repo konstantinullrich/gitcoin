@@ -15,10 +15,10 @@ between users
 
 # development
 Gitcoin uses various libraries to improve the development process:
-[asn1lib :](https://pub.dev/packages/asn1lib) encoding and decoding.
-[PointyCastle :](https://github.com/PointyCastle/pointycastle) RSA encryption and decryption.
-[http :](https://pub.dev/packages/http) Http requests 
-[crypto :](https://pub.dev/packages/crypto) Cryptographic hashing functions
+[asn1lib :](https://pub.dev/packages/asn1lib) encoding and decoding.  
+[PointyCastle :](https://github.com/PointyCastle/pointycastle) RSA encryption and decryption.  
+[http :](https://pub.dev/packages/http) Http requests.  
+[crypto :](https://pub.dev/packages/crypto) Cryptographic hashing functions.  
 
 # Building
 To build the project, you need:
