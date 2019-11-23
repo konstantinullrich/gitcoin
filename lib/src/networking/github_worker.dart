@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:gitcoin/gitcoin.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class GithubWorker {
   final String username;
@@ -13,7 +13,7 @@ class GithubWorker {
 
   getPullRequests() async {
     String url = 'https://api.github.com/search/issues?q=is:pr+is:merged+author:$username+';
-    Response response =  await get(url);
+    http.Response response =  await http.get(url);
     return jsonDecode(response.body);
   }
 

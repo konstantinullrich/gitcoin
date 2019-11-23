@@ -21,15 +21,6 @@ void runBlockchainValidator(dynamic d) {
   }
 }
 
-void runGithubHandler(dynamic d) {
-  String publicKey = RsaKeyHelper.encodePublicKeyToString(wallet.publicKey);
-  GithubWorker githubWorker = GithubWorker(githubUser, publicKey, storageManager, broadcaster);
-  while(true) {
-    githubWorker.generateRevenue();
-    sleep(Duration(minutes: 1));
-  }
-}
-
 void runWebServer(dynamic d) {
   RestHandler restHandler = RestHandler(storageManager, webPort);
   restHandler.run();
@@ -38,6 +29,5 @@ void runWebServer(dynamic d) {
 void main() {
   ReceivePort receivePort= ReceivePort();
   Future<Isolate> blockchainValidator = Isolate.spawn(runBlockchainValidator, receivePort.sendPort);
-  Future<Isolate> githubHandler = Isolate.spawn(runGithubHandler, receivePort.sendPort);
   Future<Isolate> webServer = Isolate.spawn(runWebServer, receivePort.sendPort);
 }
