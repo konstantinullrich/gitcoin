@@ -1,11 +1,11 @@
 import 'dart:core';
 
 import 'package:gitcoin/gitcoin.dart';
-import 'package:gitcoin/src/transaction/wallet.dart';
 
 class Blockchain {
   Wallet creatorWallet;
   Broadcaster broadcaster;
+  StorageManager storageManager;
   List<Block> chain = [];
 
   /// Returns the Hash of the last Block of the Blockchain
@@ -29,7 +29,7 @@ class Blockchain {
     return true;
   }
 
-  Blockchain(this.creatorWallet, {this.broadcaster=null}) {
+  Blockchain(this.creatorWallet, this.storageManager, {this.broadcaster=null}) {
     this.chain.add(Block(TransactionList(), ""));
   }
 
@@ -43,14 +43,19 @@ class Blockchain {
   /// to reach Consensus
   void _addBlock(Block block) {
     chain.add(block);
+    storageManager.storeBlockchain(this);
     this.broadcaster.broadcast({"method": "NEW_BLOCK", "block": block.toMap()});
   }
 
   /// Create a Block and add it to the ever growing Blockchain
-  void createBlock(Block block) {
+  void createBlock() {
+    String creator = RsaKeyHelper.encodePublicKeyToString(this.creatorWallet.publicKey);
+    Block block = Block(storageManager.pendingTransactions, creator);
+    storageManager.deletePendingTransactions();
     block.previousHash = this._previousHash;
     block.signBlock(this.creatorWallet.privateKey);
     this._addBlock(block);
+
   }
 
   /// Resolve Conflicts occurred in any other process

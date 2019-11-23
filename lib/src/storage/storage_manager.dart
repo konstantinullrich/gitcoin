@@ -3,6 +3,12 @@ import 'dart:io';
 
 import 'package:gitcoin/gitcoin.dart';
 
+/// HowTo Read Blockchain from File
+/// StorageManager storageManager = StorageManager("./storage/");
+/// storageManager.BlockchainBlocks
+
+
+
 class StorageManager {
   final String folderPath;
   Directory _pendingTransactions;
@@ -36,6 +42,14 @@ class StorageManager {
     _pendingTransactions.createSync();
     _pendingBlocks.createSync();
     blockchain.createSync();
+  }
+
+  void deletePendingTransactions() {
+    var files = _pendingTransactions.listSync();
+    for (var file in files) {
+      File ptrx = File(file.path);
+      ptrx.delete();
+    }
   }
 
   TransactionList get pendingTransactions {
@@ -86,9 +100,10 @@ class StorageManager {
     for (Block blc in blc_chn.chain) {
       String filename = "${blc.toHash()}.blc";
       File file = File("${this.blockchain}/$filename");
-      if (!file.existsSync()) file.createSync();
-      file.writeAsString(jsonEncode(blc.toMap()));
+      if (!file.existsSync()) {
+        file.createSync();
+        file.writeAsString(jsonEncode(blc.toMap()));
+      }
     }
   }
-
 }

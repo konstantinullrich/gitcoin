@@ -3,10 +3,10 @@ import 'package:gitcoin/gitcoin.dart';
 class TransactionList {
   List<Transaction> _trx = [];
 
-  void add(Transaction trx) {
-    this._trx.add(trx);
-  }
-  
+  int get length => _trx.length;
+
+  void add(Transaction trx) => this._trx.add(trx);
+
   bool get isValid {
     for (Transaction trx in this._trx) {
       if (!trx.isValid) return false;

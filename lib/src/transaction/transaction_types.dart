@@ -1,7 +1,7 @@
 enum TransactionType {
   transaction,
   reward,
-
+  stake
 }
 /// TransactionTypes
 ///
@@ -20,4 +20,12 @@ enum TransactionType {
 ///   "to_address": "topublickey",
 ///   "amount": 100,
 ///   "timestamp": "closed_at"
+/// }
+///
+/// TransactionType.stake
+/// {
+///   "from_address": "I_WANT_TO_MINE",
+///   "to_address": "stake"
+///   "amount": 1000,
+///   "timestamp": 11111111111
 /// }
