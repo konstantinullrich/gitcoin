@@ -12,7 +12,7 @@ class GithubWorker {
   GithubWorker(this.username, this.publicKey, this.storageManager, this.broadcaster);
 
   getPullRequests() async {
-    String url = 'https://api.github.com/search/issues?q=author:$username+is:pr+is:merged';
+    String url = 'https://api.github.com/search/issues?q=is:pr+is:merged+author:$username+';
     Response response =  await get(url);
     return jsonDecode(response.body);
   }

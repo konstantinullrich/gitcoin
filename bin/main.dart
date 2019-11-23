@@ -5,7 +5,7 @@ import 'package:gitcoin/gitcoin.dart';
 
 Wallet wallet = Wallet.fromRandom();
 StorageManager storageManager = StorageManager("./storage/");
-String githubUser = "konstantinullrich12";
+String githubUser = "konstantinullrich";
 int webPort = 3000;
 Broadcaster broadcaster = Broadcaster([]);
 
