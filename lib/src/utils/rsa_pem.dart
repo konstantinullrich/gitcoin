@@ -8,12 +8,14 @@ String decodePEM(String pem) {
   List<String> startsWith = [
     "-----BEGIN PUBLIC KEY-----",
     "-----BEGIN PRIVATE KEY-----",
+    "-----BEGIN OPENSSH PRIVATE KEY-----",
     "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n",
     "-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n",
   ];
   List<String> endsWith = [
     "-----END PUBLIC KEY-----",
     "-----END PRIVATE KEY-----",
+    "-----END OPENSSH PRIVATE KEY-----",
     "-----END PGP PUBLIC KEY BLOCK-----",
     "-----END PGP PRIVATE KEY BLOCK-----",
   ];
@@ -31,8 +33,7 @@ String decodePEM(String pem) {
     }
   }
 
-  if (isOpenPgp) {
-    int index = pem.indexOf('\r\n');
+  if (isOpenPgp) {    int index = pem.indexOf('\r\n');
     pem = pem.substring(0, index);
   }
 

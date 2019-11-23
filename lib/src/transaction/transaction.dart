@@ -8,13 +8,13 @@ import 'package:pointycastle/pointycastle.dart';
 class Transaction {
   String _fromAddress;
   String _toAddress;
-  double _amount;
+  int _amount;
   int _timestamp = DateTime.now().millisecondsSinceEpoch;
   String _signature;
 
   String get toAddress => _toAddress;
   String get fromAddress => _fromAddress;
-  double get amount => _amount;
+  int get amount => _amount;
   int get timestamp => _timestamp;
 
   /// Returns if the Transaction is valid
@@ -72,8 +72,8 @@ class Transaction {
   }
 
   String toString() {
-    return this._fromAddress +
-        this._toAddress +
+    return this._fromAddress.toString() +
+        this._toAddress.toString() +
         this._amount.toString() +
         this._timestamp.toString();
   }

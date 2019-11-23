@@ -30,9 +30,14 @@ class Wallet {
   void saveToFile(String folderPath) {
     Directory directory = Directory(folderPath);
     if (!directory.existsSync()) throw("\"$folderPath\" does not exist or is not a valid path");
-    print(directory.path);
-    // File privateKeyFile = File();
-    // File publicKeyFile = File();
+
+    File privateKeyFile = File("${directory.path}/private_key");
+    File publicKeyFile = File("${directory.path}/public_key.pub");
+    if (!privateKeyFile.existsSync()) privateKeyFile.createSync();
+    if (!publicKeyFile.existsSync()) publicKeyFile.createSync();
+
+    privateKeyFile.writeAsString(RsaKeyHelper.encodePrivateKeyToPem(this.privateKey));
+    publicKeyFile.writeAsString(RsaKeyHelper.encodePublicKeyToPem(this.publicKey));
   }
 
 }
