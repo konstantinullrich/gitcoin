@@ -44,11 +44,12 @@ class RestHandler {
         case "GET":
           switch(request.requestedUri.path) {
             case FULL_BLOCKCHAIN:
-              request.response.write(this._blockListToMap(blockList));
+              request.response.write(jsonEncode(this._blockListToMap(blockList)));
               break;
             case WALLET:
               String walletAddress = request.uri.queryParameters["walletId"];
-              request.response.write({ "funds": getFundsOfAddress(blockList, walletAddress) });
+              request.response.write(
+                  jsonEncode({ "funds": getFundsOfAddress(blockList, walletAddress) }));
               break;
           }
           break;
@@ -69,6 +70,7 @@ class RestHandler {
           break;
         default:
           request.response.write('You are connected to the gitcoin chain!');
+          break;
       }
       await request.response.close();
     }
