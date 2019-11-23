@@ -29,7 +29,7 @@ class Wallet {
 
   void saveToFile(String folderPath) {
     Directory directory = Directory(folderPath);
-    if (!directory.existsSync()) throw("\"$folderPath\" does not exist or is not a valid path");
+    if (!directory.existsSync()) directory.createSync(recursive: true);
 
     File privateKeyFile = File("${directory.path}/private_key");
     File publicKeyFile = File("${directory.path}/public_key.pub");
