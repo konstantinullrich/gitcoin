@@ -1,8 +1,6 @@
 import 'dart:core';
 
-import 'package:gitcoin/blockchain/block.dart';
-import 'package:gitcoin/transaction/transaction_list.dart';
-import 'package:gitcoin/utils/rsa_pem.dart';
+import 'package:gitcoin/gitcoin.dart';
 
 void main() {
 var kp = RsaKeyHelper.generateKeyPair();
