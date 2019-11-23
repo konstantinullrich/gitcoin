@@ -14,7 +14,10 @@ void runBlockchainValidator(dynamic d) {
   storageManager.storeBlockchain(blockchain);
   while(true) {
     if (storageManager.pendingTransactions.length > 2) {
+      print("Start mining a Block");
+      final stopwatch = Stopwatch()..start();
       blockchain.createBlock();
+      print('The mining Process was completed in ${stopwatch.elapsed}');
     } else {
       sleep(Duration(seconds: 10));
     }
