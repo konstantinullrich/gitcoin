@@ -6,6 +6,7 @@ import 'package:gitcoin/gitcoin.dart';
 Wallet wallet = Wallet.fromRandom();
 StorageManager storageManager = StorageManager("./storage/");
 String githubUser = "konstantinullrich12";
+int webPort = 3000;
 
 void runBlockchainValidator(dynamic d) {
   Blockchain blockchain = Blockchain(wallet, storageManager);
@@ -28,8 +29,14 @@ void runGithubHandler(dynamic d) {
   }
 }
 
+void runWebServer(dynamic d) {
+  RestHandler restHandler = RestHandler(storageManager, webPort);
+  restHandler.run();
+}
+
 void main() {
   ReceivePort receivePort= ReceivePort();
   Future<Isolate> blockchainValidator = Isolate.spawn(runBlockchainValidator, receivePort.sendPort);
   Future<Isolate> githubHandler = Isolate.spawn(runGithubHandler, receivePort.sendPort);
+  Future<Isolate> webServer = Isolate.spawn(runWebServer, receivePort.sendPort);
 }

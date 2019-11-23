@@ -12,6 +12,7 @@ export 'src/transaction/wallet.dart';
 // Networking
 export 'src/networking/broadcaster.dart';
 export 'src/networking/github_worker.dart';
+export 'src/networking/rest_handler.dart';
 
 // Storage Manger
 export 'src/storage/storage_manager.dart';

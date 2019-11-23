@@ -52,8 +52,7 @@ class Blockchain {
     chain.add(block);
     storageManager.storeBlockchain(this);
     if (this.broadcaster != null) {
-      this.broadcaster.broadcast(
-          {"method": "NEW_BLOCK", "block": block.toMap()});
+      this.broadcaster.broadcast("/block", block.toMap());
     }
   }
 

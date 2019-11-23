@@ -11,7 +11,7 @@ class GithubWorker {
   GithubWorker(this.username, this.publicKey, this.storageManager);
 
   getPullRequests() async {
-    String url = 'https://api.github.com/search/issues?q=author:konstantinullrich+is:pr+is:merged';
+    String url = 'https://api.github.com/search/issues?q=author:$username+is:pr+is:merged';
     Response response =  await get(url);
     return jsonDecode(response.body);
   }
