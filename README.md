@@ -1,23 +1,23 @@
 # Gitcoin
 
-A Cryptocurrency to support Open Source Contributors using Google's dartlang.
-Gitcoin is obtained by contributing to open sources on github and can be traded
-between users
+A Cryptocurrency to support open source contributors using Google's dartlang.
+Gitcoin is obtained by contributing to open source development on github and can be traded
+between users.
 
 
-# features
+# Features
 
 - Backend 100% dartlang.
 - Based on the blockchain algorithm.
-- Proof by work validation alogithm.
+- Proof by work validation algorithm.
 - Rsa encryption and decryption.
 - Each user is a http client and server.
 
 
-# development
+# Development
 
 Gitcoin uses various libraries to improve the development process:  
-- [asn1lib :](https://pub.dev/packages/asn1lib) encoding and decoding.  
+- [asn1lib :](https://pub.dev/packages/asn1lib) Encoding and decoding.  
 - [PointyCastle :](https://github.com/PointyCastle/pointycastle) RSA encryption and decryption.  
 - [http :](https://pub.dev/packages/http) Http requests.  
 - [crypto :](https://pub.dev/packages/crypto) Cryptographic hashing functions.  
