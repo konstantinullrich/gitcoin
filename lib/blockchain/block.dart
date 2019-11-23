@@ -1,3 +1,69 @@
-class Block {
+import 'dart:convert';
 
+import 'package:crypto/crypto.dart' as crypto;
+import 'package:gitcoin/transaction/transaction_list.dart';
+import 'package:gitcoin/utils/rsa_pem.dart';
+import 'package:pointycastle/export.dart';
+
+class Block {
+  TransactionList data;
+  String previousHash = "0x0";
+  String creator = "";
+  String signature = "";
+  int timestamp = DateTime.now().millisecondsSinceEpoch;
+
+  Block(this.data, this.creator);
+
+  Block.fromMap(Map<String, dynamic> unresolvedBlock) {
+    if (
+    unresolvedBlock.containsKey("data") &&
+        unresolvedBlock.containsKey("creator") &&
+        unresolvedBlock.containsKey("signature") &&
+        unresolvedBlock.containsKey("timestamp") &&
+        unresolvedBlock.containsKey("previousHash")
+    ) {
+      this.data = unresolvedBlock["data"];
+      this.creator = unresolvedBlock["creator"];
+      this.signature = unresolvedBlock["signature"];
+      this.timestamp = unresolvedBlock["timestamp"];
+      this.previousHash = unresolvedBlock["previousHash"];
+    } else {
+      throw("Some Parameter are missing!");
+    }
+  }
+
+  bool get isValid {
+    RSAPublicKey publicKey = RsaKeyHelper.parsePublicKeyFromString(this.creator);
+    bool hasValidSignature = RsaKeyHelper.validateStringSignature(this.toHash(), this.signature, publicKey);
+    return this.data.isValid && hasValidSignature;
+  }
+
+  void signBlock(PrivateKey privateKey) {
+    RSASignature sig= RsaKeyHelper.createSignature(this.toHash(), privateKey);
+    signature = base64Encode(sig.bytes);
+  }
+
+  String toHash() {
+    crypto.Digest digest = crypto.sha256.convert(
+        utf8.encode(this.toString())
+    );
+    return digest.toString();
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "data": this.data.toList(),
+      "creator": this.creator,
+      "signature": this.signature,
+      "timestamp": this.timestamp,
+      "previousHash": this.previousHash,
+    };
+  }
+
+  String toString() {
+    return this.creator +
+        this.data.toString() +
+        this.previousHash +
+        this.timestamp.toString();
+  }
 }

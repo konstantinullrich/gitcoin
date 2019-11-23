@@ -14,6 +14,7 @@ environment:
 dependencies:
   crypto: ^2.1.3
   pointycastle: ^1.0.2
+  asn1lib: ^0.5.14
   eosdart_ecc: ^0.4.0
 
 dev_dependencies:

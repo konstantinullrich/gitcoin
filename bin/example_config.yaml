@@ -1,0 +1,7 @@
+github_user:
+  - konstantinullrich
+
+rootdir: ./
+rsa-ssh:
+  public: path/to/public/key
+  privat: path/to/privat/key

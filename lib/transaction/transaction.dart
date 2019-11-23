@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:eosdart_ecc/eosdart_ecc.dart';
+import 'package:gitcoin/utils/rsa_pem.dart';
+import 'package:pointycastle/pointycastle.dart';
 
 
 class Transaction {
@@ -18,17 +19,17 @@ class Transaction {
 
   /// Returns if the Transaction is valid
   bool get isValid {
-    if (this._fromAddress == null) return true;
+    if (this._fromAddress == null) return true; // We assume it is a miners Reward
+    if (this._fromAddress.startsWith("https://") || this._fromAddress.startsWith("http://")) return true; // We assume it is a Reward for a PR
 
     if (this._signature == null || this._signature.isEmpty) {
       throw('No signature in this transaction');
     }
 
-    EOSPublicKey publicKey = EOSPublicKey.fromString(this._fromAddress);
-    return (this._fromAddress == this._fromAddress) &&
-        !this._amount.isNegative &&
-        EOSSignature.fromString(this._signature)
-            .verify(this.toHash(), publicKey);
+    RSAPublicKey publicKey = RsaKeyHelper.parsePublicKeyFromString(this._fromAddress);
+    bool hasValidSignature = RsaKeyHelper.validateStringSignature(this.toHash(), this._signature, publicKey);
+
+    return this._fromAddress != this._toAddress && !this._amount.isNegative && hasValidSignature;
   }
 
   Transaction(this._fromAddress, this._toAddress, this._amount);
@@ -56,13 +57,12 @@ class Transaction {
     }
   }
 
-  void signTransaction(EOSPrivateKey privateKey) {
-    if (privateKey.toEOSPublicKey().toString() != this._fromAddress) {
-      throw('You cannot sign transactions for other wallets!');
-    }
-
-    String hash = this.toHash();
-    this._signature = privateKey.signString(hash).toString();
+  void signTransaction(PrivateKey privateKey) {
+    Signer s = Signer('SHA-256/RSA');
+    AsymmetricKeyParameter<RSAPrivateKey> privateKeyParams = PrivateKeyParameter(privateKey);
+    s.init(true, privateKeyParams);
+    RSASignature sig = s.generateSignature(utf8.encode(this.toHash()));
+    this._signature = base64Encode(sig.bytes);
   }
 
   String toHash() {
