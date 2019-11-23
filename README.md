@@ -9,7 +9,7 @@ between users
 
 - Backend 100% dartlang.
 - Based on the blockchain algorithm.
-- Broof by work validation alogithm.
+- Proof by work validation alogithm.
 - Rsa encryption and decryption.
 - Each user is a http client and server.
 
