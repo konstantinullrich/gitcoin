@@ -1,5 +1,5 @@
 
-import 'package:gitcoin/utils/rsa_pem.dart';
+import 'package:gitcoin/gitcoin.dart';
 import 'package:pointycastle/pointycastle.dart';
 import 'package:test/test.dart';
 

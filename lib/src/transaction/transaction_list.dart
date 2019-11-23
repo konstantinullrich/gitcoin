@@ -1,4 +1,4 @@
-import 'package:gitcoin/transaction/transaction.dart';
+import 'package:gitcoin/gitcoin.dart';
 
 class TransactionList {
   List<Transaction> _trx = [];

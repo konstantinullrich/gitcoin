@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:gitcoin/transaction/transaction_list.dart';
-import 'package:gitcoin/utils/rsa_pem.dart';
+import 'package:gitcoin/gitcoin.dart';
 import 'package:pointycastle/export.dart';
 
 class Block {
