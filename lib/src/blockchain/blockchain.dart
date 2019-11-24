@@ -37,7 +37,7 @@ class Blockchain {
   }
 
   Blockchain(this.creatorWallet, this.storageManager, {this.broadcaster=null}) {
-    this.chain.add(Block(TransactionList(), ""));
+    this.chain.add(Block(TransactionList(), ''));
   }
 
   Blockchain.fromList(List<Map> unresolvedQuery) {
@@ -52,14 +52,19 @@ class Blockchain {
     chain.add(block);
     storageManager.storeBlockchain(this);
     if (this.broadcaster != null) {
-      this.broadcaster.broadcast("/block", block.toMap());
+      this.broadcaster.broadcast('/block', block.toMap());
     }
   }
 
   /// Create a Block and add it to the ever growing Blockchain
   void createBlock() {
     String creator = RsaKeyHelper.encodePublicKeyToString(this.creatorWallet.publicKey);
-    Block block = Block(storageManager.pendingTransactions, creator);
+    TransactionList pendingTransactions = storageManager.pendingTransactions;
+    if (!pendingTransactions.isValid) {
+      storageManager.deletePendingTransaction(pendingTransactions.invalidTransactions);
+      return createBlock();
+    }
+    Block block = Block(pendingTransactions, creator);
     block.previousHash = this._previousHash;
     block.signBlock(this.creatorWallet.privateKey);
     for (int i = 0; i < this.maxNonce; i++) {

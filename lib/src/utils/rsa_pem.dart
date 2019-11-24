@@ -2,22 +2,22 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:pointycastle/export.dart';
-import "package:asn1lib/asn1lib.dart";
+import 'package:asn1lib/asn1lib.dart';
 
 String decodePEM(String pem) {
   List<String> startsWith = [
-    "-----BEGIN PUBLIC KEY-----",
-    "-----BEGIN PRIVATE KEY-----",
-    "-----BEGIN OPENSSH PRIVATE KEY-----",
-    "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n",
-    "-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n",
+    '-----BEGIN PUBLIC KEY-----',
+    '-----BEGIN PRIVATE KEY-----',
+    '-----BEGIN OPENSSH PRIVATE KEY-----',
+    '-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n',
+    '-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n',
   ];
   List<String> endsWith = [
-    "-----END PUBLIC KEY-----",
-    "-----END PRIVATE KEY-----",
-    "-----END OPENSSH PRIVATE KEY-----",
-    "-----END PGP PUBLIC KEY BLOCK-----",
-    "-----END PGP PRIVATE KEY BLOCK-----",
+    '-----END PUBLIC KEY-----',
+    '-----END PRIVATE KEY-----',
+    '-----END OPENSSH PRIVATE KEY-----',
+    '-----END PGP PUBLIC KEY BLOCK-----',
+    '-----END PGP PRIVATE KEY BLOCK-----',
   ];
   bool isOpenPgp = pem.indexOf('BEGIN PGP') != -1;
 
@@ -204,11 +204,11 @@ class RsaKeyHelper {
 
   static String encodePublicKeyToPem(RSAPublicKey publicKey) {
     String dataBase64 = encodePublicKeyToString(publicKey);
-    return """-----BEGIN PUBLIC KEY-----\r\n$dataBase64\r\n-----END PUBLIC KEY-----""";
+    return '''-----BEGIN PUBLIC KEY-----\r\n$dataBase64\r\n-----END PUBLIC KEY-----''';
   }
 
   static String encodePrivateKeyToPem(RSAPrivateKey privateKey) {
     String dataBase64 = encodePrivateKeyToString(privateKey);
-    return """-----BEGIN PRIVATE KEY-----\r\n$dataBase64\r\n-----END PRIVATE KEY-----""";
+    return '''-----BEGIN PRIVATE KEY-----\r\n$dataBase64\r\n-----END PRIVATE KEY-----''';
   }
 }

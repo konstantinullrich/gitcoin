@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:gitcoin/gitcoin.dart';
 
 /// HowTo Read Blockchain from File
-/// StorageManager storageManager = StorageManager("./storage/");
+/// StorageManager storageManager = StorageManager('./storage/');
 /// storageManager.BlockchainBlocks
 
 
@@ -20,9 +20,9 @@ class StorageManager {
     Directory directory = Directory(this.folderPath);
     if (!directory.existsSync()) directory.createSync(recursive: true);
 
-    _pendingTransactions = Directory("${directory.path}/pendingTransactions");
-    _pendingBlocks = Directory("${directory.path}/pendingBlocks");
-    blockchain = Directory("${directory.path}/blockchain");
+    _pendingTransactions = Directory('${directory.path}/pendingTransactions');
+    _pendingBlocks = Directory('${directory.path}/pendingBlocks');
+    blockchain = Directory('${directory.path}/blockchain');
 
     if (!_pendingTransactions.existsSync()) _pendingTransactions.createSync();
     if (!_pendingBlocks.existsSync()) _pendingBlocks.createSync();
@@ -35,9 +35,9 @@ class StorageManager {
     directory.deleteSync(recursive: true);
     directory.createSync();
 
-    _pendingTransactions = Directory("${directory.path}/pendingTransactions");
-    _pendingBlocks = Directory("${directory.path}/pendingBlocks");
-    blockchain = Directory("${directory.path}/blockchain");
+    _pendingTransactions = Directory('${directory.path}/pendingTransactions');
+    _pendingBlocks = Directory('${directory.path}/pendingBlocks');
+    blockchain = Directory('${directory.path}/blockchain');
 
     _pendingTransactions.createSync();
     _pendingBlocks.createSync();
@@ -47,6 +47,13 @@ class StorageManager {
   void deletePendingTransactions() {
     for (File file in selectedPendingTransactions) {
       file.delete();
+    }
+  }
+  void deletePendingTransaction(List<Transaction> listToDelete) {
+    for (Transaction trx in listToDelete) {
+      String filename = '${trx.toHash()}.trx';
+      File file = File('${this._pendingTransactions.path}/$filename');
+      if (file.existsSync()) file.delete();
     }
   }
 
@@ -62,15 +69,15 @@ class StorageManager {
   }
 
   void storePendingTransaction(Transaction trx) {
-    String filename = "${trx.toHash()}.trx";
-    File file = File("${this._pendingTransactions.path}/$filename");
+    String filename = '${trx.toHash()}.trx';
+    File file = File('${this._pendingTransactions.path}/$filename');
     if (!file.existsSync()) file.createSync();
     file.writeAsStringSync(jsonEncode(trx.toMap()));
   }
 
   void storePendingBlock(Block blc) {
-    String filename = "${blc.toHash()}.blc";
-    File file = File("${this._pendingBlocks.path}/$filename");
+    String filename = '${blc.toHash()}.blc';
+    File file = File('${this._pendingBlocks.path}/$filename');
     if (!file.existsSync()) file.createSync();
     file.writeAsStringSync(jsonEncode(blc.toMap()));
   }
@@ -109,8 +116,8 @@ class StorageManager {
 
   void storeBlockchain(Blockchain blc_chn) {
     for (Block blc in blc_chn.chain) {
-      String filename = "${blc.toHash()}.blc";
-      File file = File("${this.blockchain.path}/$filename");
+      String filename = '${blc.toHash()}.blc';
+      File file = File('${this.blockchain.path}/$filename');
       if (!file.existsSync()) {
         file.createSync();
         file.writeAsStringSync(jsonEncode(blc.toMap()));

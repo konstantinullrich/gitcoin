@@ -21,16 +21,16 @@ class GithubWorker {
     List<Transaction> openTrx = [];
     List<Block> blockList = this.storageManager.BlockchainBlocks;
     Map pullRequests = await getPullRequests();
-    List items = pullRequests["items"];
+    List items = pullRequests['items'];
     for (Map item in items) {
-      String from_url = item["html_url"];
-      int score = item["score"].round();
-      bool isInChain = findInBlockList(blockList, "fromAddress", from_url);
+      String from_url = item['html_url'];
+      int score = item['score'].round();
+      bool isInChain = findInBlockList(blockList, 'fromAddress', from_url);
       if (!isInChain)
         openTrx.add(Transaction(from_url, this.publicKey, score));
     }
     for (Transaction trx in openTrx) {
-      broadcaster.broadcast("/transaction", trx.toMap());
+      broadcaster.broadcast('/transaction', trx.toMap());
       storageManager.storePendingTransaction(trx);
     }
   }

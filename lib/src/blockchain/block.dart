@@ -6,9 +6,9 @@ import 'package:pointycastle/export.dart';
 
 class Block {
   TransactionList data;
-  String previousHash = "0x0";
-  String creator = "";
-  String signature = "";
+  String previousHash = '0x0';
+  String creator = '';
+  String signature = '';
   int nuance = 0;
   int timestamp = DateTime.now().millisecondsSinceEpoch;
 
@@ -16,21 +16,21 @@ class Block {
 
   Block.fromMap(Map<String, dynamic> unresolvedBlock) {
     if (
-    unresolvedBlock.containsKey("data") &&
-        unresolvedBlock.containsKey("creator") &&
-        unresolvedBlock.containsKey("signature") &&
-        unresolvedBlock.containsKey("timestamp") &&
-        unresolvedBlock.containsKey("previousHash") &&
-        unresolvedBlock.containsKey("nuance")
+    unresolvedBlock.containsKey('data') &&
+        unresolvedBlock.containsKey('creator') &&
+        unresolvedBlock.containsKey('signature') &&
+        unresolvedBlock.containsKey('timestamp') &&
+        unresolvedBlock.containsKey('previousHash') &&
+        unresolvedBlock.containsKey('nuance')
     ) {
-      this.data = TransactionList.fromList(unresolvedBlock["data"]);
-      this.creator = unresolvedBlock["creator"];
-      this.signature = unresolvedBlock["signature"];
-      this.timestamp = unresolvedBlock["timestamp"];
-      this.previousHash = unresolvedBlock["previousHash"];
-      this.nuance = unresolvedBlock["nuance"];
+      this.data = TransactionList.fromList(unresolvedBlock['data']);
+      this.creator = unresolvedBlock['creator'];
+      this.signature = unresolvedBlock['signature'];
+      this.timestamp = unresolvedBlock['timestamp'];
+      this.previousHash = unresolvedBlock['previousHash'];
+      this.nuance = unresolvedBlock['nuance'];
     } else {
-      throw("Some Parameter are missing!");
+      throw('Some Parameter are missing!');
     }
   }
 
@@ -54,12 +54,12 @@ class Block {
 
   Map<String, dynamic> toMap() {
     return {
-      "data": this.data.toList(),
-      "creator": this.creator,
-      "signature": this.signature,
-      "timestamp": this.timestamp,
-      "nuance": this.nuance,
-      "previousHash": this.previousHash
+      'data': this.data.toList(),
+      'creator': this.creator,
+      'signature': this.signature,
+      'timestamp': this.timestamp,
+      'nuance': this.nuance,
+      'previousHash': this.previousHash
     };
   }
 

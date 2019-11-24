@@ -9,7 +9,7 @@ class Broadcaster {
   void broadcast(String path, Map message) {
     String broadcastMessage = jsonEncode(message);
     for (String node in this.nodes) {
-        post(node + path, headers: {"Content-Type": "application/json"},
+        post(node + path, headers: {'Content-Type': 'application/json'},
             body: broadcastMessage
         ).timeout(Duration(minutes: 1)).catchError(print);
     }

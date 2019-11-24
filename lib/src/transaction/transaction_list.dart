@@ -15,11 +15,16 @@ class TransactionList {
 
   void add(Transaction trx) => this._trx.add(trx);
 
-  bool get isValid {
+  List<Transaction> get invalidTransactions {
+    List<Transaction> results = [];
     for (Transaction trx in this._trx) {
-      if (!trx.isValid) return false;
+      if (!trx.isValid) results.add(trx);
     }
-    return true;
+    return results;
+  }
+  
+  bool get isValid {
+    return (invalidTransactions.length == 0);
   }
   
   List<Map> toList() {

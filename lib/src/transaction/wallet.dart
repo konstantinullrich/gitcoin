@@ -25,8 +25,8 @@ class Wallet {
     //   Wallet.fromRandom();
     //   return;
     // }
-    if (!privateKeyFile.existsSync()) throw("\"$privateKeyFilePath\" does not exist or is not a valid path");
-    if (!publicKeyFile.existsSync()) throw("\"$publicKeyFilePath\" does not exist or is not a valid path");
+    if (!privateKeyFile.existsSync()) throw('\"$privateKeyFilePath\" does not exist or is not a valid path');
+    if (!publicKeyFile.existsSync()) throw('\"$publicKeyFilePath\" does not exist or is not a valid path');
 
     this._privateKey = RsaKeyHelper.parsePrivateKeyFromPem(privateKeyFile.readAsStringSync());
     this._publicKey = RsaKeyHelper.parsePublicKeyFromPem(publicKeyFile.readAsStringSync());
@@ -36,8 +36,8 @@ class Wallet {
     Directory directory = Directory(folderPath);
     if (!directory.existsSync()) directory.createSync(recursive: true);
 
-    File privateKeyFile = File("${directory.path}/private_key");
-    File publicKeyFile = File("${directory.path}/public_key.pub");
+    File privateKeyFile = File('${directory.path}/private_key');
+    File publicKeyFile = File('${directory.path}/public_key.pub');
     if (!privateKeyFile.existsSync()) privateKeyFile.createSync();
     if (!publicKeyFile.existsSync()) publicKeyFile.createSync();
 
