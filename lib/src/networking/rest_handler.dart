@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypton/crypton.dart';
 import 'package:gitcoin/gitcoin.dart';
 
 /// GET  '/blockchain/full'         => get full Blockchain as Array
@@ -87,8 +88,7 @@ class RestHandler {
                     rawMap['toAddress'],
                     rawMap['amount']
                 );
-                trx.signTransaction(RsaKeyHelper.parsePrivateKeyFromString(
-                    rawMap['senderKey']));
+                trx.signTransaction(RSAPrivateKey.fromString(rawMap['senderKey']));
                 storageManager.storePendingTransaction(trx);
               break;
           }

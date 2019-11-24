@@ -5,7 +5,7 @@ import 'package:gitcoin/gitcoin.dart';
 void main() {
   StorageManager storageManager = StorageManager('./storage');
   Wallet wallet = Wallet.fromPem('./wallet/private_key', './wallet/public_key.pub');
-  String myAddress = RsaKeyHelper.encodePublicKeyToString(wallet.publicKey);
+  String myAddress = wallet.publicKey.toString();
   int yourCurrentFund = getFundsOfAddress(storageManager, myAddress);
   int spending = 0;
 

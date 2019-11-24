@@ -56,7 +56,7 @@ class Blockchain {
 
   /// Create a Block and add it to the ever growing Blockchain
   void createBlock() {
-    String creator = RsaKeyHelper.encodePublicKeyToString(this.creatorWallet.publicKey);
+    String creator = this.creatorWallet.publicKey.toString();
     TransactionList pendingTransactions = storageManager.pendingTransactions;
     if (!pendingTransactions.isValid) {
       storageManager.deletePendingTransaction(pendingTransactions.invalidTransactions);
