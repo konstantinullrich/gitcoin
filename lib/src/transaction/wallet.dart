@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:gitcoin/gitcoin.dart';
+import 'package:gitcoin/src/utils/ec_pem.dart';
+import 'package:pointycastle/ecc/curves/secp256k1.dart';
 import 'package:pointycastle/pointycastle.dart';
 
 class Wallet {
@@ -45,4 +48,34 @@ class Wallet {
     publicKeyFile.writeAsString(RsaKeyHelper.encodePublicKeyToPem(this.publicKey));
   }
 
+}
+
+class ECWallet {
+  ECPrivateKey _privateKey;
+  ECPublicKey _publicKey;
+
+  ECPrivateKey get privateKey => _privateKey;
+  ECPublicKey get publicKey => _publicKey;
+  String get address => base64Encode(_publicKey.Q.getEncoded());
+  String get privateKeyAsString => _privateKey.d.toRadixString(16);
+
+  ECWallet(String privateKey) {
+    ECCurve_secp256k1 secp256k1 = ECCurve_secp256k1();
+    this._privateKey = ECPrivateKey(BigInt.parse(privateKey, radix: 16), secp256k1);
+    ECPoint Q = secp256k1.G * this._privateKey.d;
+    this._publicKey = ECPublicKey(Q, ECCurve_secp256k1());
+  }
+
+  ECWallet.fromRandom(){
+    AsymmetricKeyPair<PublicKey, PrivateKey> keyPair = secp256k1KeyPair();
+    this._publicKey = keyPair.publicKey;
+    this._privateKey = keyPair.privateKey;
+  }
+
+  String toString() => jsonEncode(this.toMap());
+
+  Map<String, String> toMap() => {
+    "privateKey": privateKeyAsString,
+    "publicKey": address
+  };
 }

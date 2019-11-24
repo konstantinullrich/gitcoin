@@ -26,3 +26,27 @@ Gitcoin uses various libraries to improve the development process:
 
 To build the project, you need:
 - [Dart Sdk](https://dart.dev/get-dart)
+
+# Setup
+
+``
+$ git clone https://github.com/konstantinullrich/gitcoin.git
+``
+
+or using ssh
+
+``
+$ git clone git@github.com:konstantinullrich/gitcoin.git
+``
+
+Download the dependencies
+
+``
+$ pub get
+``
+
+Create a new Wallet
+
+``
+$ dart bin/wallet_generator.dart
+``
