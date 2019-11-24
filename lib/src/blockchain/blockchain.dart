@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:gitcoin/gitcoin.dart';
 
 class Blockchain {
-  int difficulty = 5;
+  int difficulty = 3;
   int maxNonce = pow(2, 32);
   Wallet creatorWallet;
   Broadcaster broadcaster;
