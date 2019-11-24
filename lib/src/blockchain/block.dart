@@ -20,13 +20,15 @@ class Block {
         unresolvedBlock.containsKey("creator") &&
         unresolvedBlock.containsKey("signature") &&
         unresolvedBlock.containsKey("timestamp") &&
-        unresolvedBlock.containsKey("previousHash")
+        unresolvedBlock.containsKey("previousHash") &&
+        unresolvedBlock.containsKey("nuance")
     ) {
       this.data = TransactionList.fromList(unresolvedBlock["data"]);
       this.creator = unresolvedBlock["creator"];
       this.signature = unresolvedBlock["signature"];
       this.timestamp = unresolvedBlock["timestamp"];
       this.previousHash = unresolvedBlock["previousHash"];
+      this.nuance = unresolvedBlock["nuance"];
     } else {
       throw("Some Parameter are missing!");
     }
@@ -56,7 +58,8 @@ class Block {
       "creator": this.creator,
       "signature": this.signature,
       "timestamp": this.timestamp,
-      "previousHash": this.previousHash,
+      "nuance": this.nuance,
+      "previousHash": this.previousHash
     };
   }
 

@@ -60,12 +60,12 @@ class Blockchain {
   void createBlock() {
     String creator = RsaKeyHelper.encodePublicKeyToString(this.creatorWallet.publicKey);
     Block block = Block(storageManager.pendingTransactions, creator);
-    storageManager.deletePendingTransactions();
     block.previousHash = this._previousHash;
     block.signBlock(this.creatorWallet.privateKey);
     for (int i = 0; i < this.maxNonce; i++) {
       if (block.toHash().startsWith(this._proofOfWork)) {
         this._addBlock(block);
+        storageManager.deletePendingTransactions();
         return;
       } else {
         block.nuance += 1;

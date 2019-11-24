@@ -14,7 +14,7 @@ class StorageManager {
   Directory _pendingTransactions;
   Directory _pendingBlocks;
   Directory blockchain;
-
+  List<File> selectedPendingTransactions = [];
 
   StorageManager(this.folderPath) {
     Directory directory = Directory(this.folderPath);
@@ -45,10 +45,8 @@ class StorageManager {
   }
 
   void deletePendingTransactions() {
-    var files = _pendingTransactions.listSync();
-    for (var file in files) {
-      File ptrx = File(file.path);
-      ptrx.delete();
+    for (File file in selectedPendingTransactions) {
+      file.delete();
     }
   }
 
@@ -57,6 +55,7 @@ class StorageManager {
     var files = _pendingTransactions.listSync();
     for (var file in files) {
       File ptrx = File(file.path);
+      selectedPendingTransactions.add(ptrx);
       results.add(Transaction.fromMap(jsonDecode(ptrx.readAsStringSync())));
     }
     return results;
