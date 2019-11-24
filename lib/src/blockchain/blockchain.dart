@@ -4,16 +4,14 @@ import 'dart:math';
 import 'package:gitcoin/gitcoin.dart';
 
 class Blockchain {
-  int difficulty = 5;
+  int difficulty = 3;
   int maxNonce = pow(2, 32);
   Wallet creatorWallet;
   Broadcaster broadcaster;
   StorageManager storageManager;
   List<Block> chain = [];
 
-  String get _proofOfWork {
-    return List(this.difficulty).join('').replaceAll('null', '0');
-  }
+  String get _proofOfWork => List(this.difficulty).join('').replaceAll('null', '0');
 
   /// Returns the Hash of the last Block of the Blockchain
   String get _previousHash => this.chain.last.toHash();
@@ -58,7 +56,7 @@ class Blockchain {
 
   /// Create a Block and add it to the ever growing Blockchain
   void createBlock() {
-    String creator = RsaKeyHelper.encodePublicKeyToString(this.creatorWallet.publicKey);
+    String creator = this.creatorWallet.publicKey.toString();
     TransactionList pendingTransactions = storageManager.pendingTransactions;
     if (!pendingTransactions.isValid) {
       storageManager.deletePendingTransaction(pendingTransactions.invalidTransactions);

@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypton/crypton.dart';
 import 'package:gitcoin/gitcoin.dart';
-import 'package:gitcoin/src/utils/ec_pem.dart';
-import 'package:pointycastle/ecc/curves/secp256k1.dart';
-import 'package:pointycastle/pointycastle.dart';
 
 class Wallet {
   RSAPublicKey _publicKey;
@@ -14,25 +11,20 @@ class Wallet {
   RSAPrivateKey get privateKey => _privateKey;
 
   Wallet.fromRandom() {
-    AsymmetricKeyPair<PublicKey, PrivateKey> keyPair = RsaKeyHelper.generateKeyPair();
-    this._publicKey = keyPair.publicKey;
-    this._privateKey = keyPair.privateKey;
+    RSAKeypair keypair = RSAKeypair.fromRandom();
+    this._publicKey = keypair.publicKey;
+    this._privateKey = keypair.privateKey;
   }
 
   Wallet.fromPem(String privateKeyFilePath, String publicKeyFilePath) {
     File privateKeyFile = File(privateKeyFilePath);
     File publicKeyFile = File(publicKeyFilePath);
 
-
-    // if (!privateKeyFile.existsSync() || !publicKeyFile.existsSync()){
-    //   Wallet.fromRandom();
-    //   return;
-    // }
     if (!privateKeyFile.existsSync()) throw('\"$privateKeyFilePath\" does not exist or is not a valid path');
     if (!publicKeyFile.existsSync()) throw('\"$publicKeyFilePath\" does not exist or is not a valid path');
 
-    this._privateKey = RsaKeyHelper.parsePrivateKeyFromPem(privateKeyFile.readAsStringSync());
-    this._publicKey = RsaKeyHelper.parsePublicKeyFromPem(publicKeyFile.readAsStringSync());
+    this._privateKey = RSAPrivateKey.fromString(decodePEM(privateKeyFile.readAsStringSync()));
+    this._publicKey = RSAPublicKey.fromString(decodePEM(publicKeyFile.readAsStringSync()));
   }
 
   void saveToFile(String folderPath) {
@@ -44,8 +36,8 @@ class Wallet {
     if (!privateKeyFile.existsSync()) privateKeyFile.createSync();
     if (!publicKeyFile.existsSync()) publicKeyFile.createSync();
 
-    privateKeyFile.writeAsString(RsaKeyHelper.encodePrivateKeyToPem(this.privateKey));
-    publicKeyFile.writeAsString(RsaKeyHelper.encodePublicKeyToPem(this.publicKey));
+    privateKeyFile.writeAsString(encodePrivateKeyToPem(this.privateKey));
+    publicKeyFile.writeAsString(encodePublicKeyToPem(this.publicKey));
   }
 
 }

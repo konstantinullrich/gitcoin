@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:gitcoin/gitcoin.dart';
-import 'package:pointycastle/pointycastle.dart';
+import 'package:crypton/crypton.dart';
 
 
 class Transaction {
@@ -26,8 +25,8 @@ class Transaction {
       throw('No signature in this transaction');
     }
 
-    RSAPublicKey publicKey = RsaKeyHelper.parsePublicKeyFromString(this._fromAddress);
-    bool hasValidSignature = RsaKeyHelper.validateStringSignature(this.toHash(), this._signature, publicKey);
+    RSAPublicKey publicKey = RSAPublicKey.fromString(this._fromAddress);
+    bool hasValidSignature = publicKey.verifySignature(this.toHash(), this._signature);
 
     return this._fromAddress != this._toAddress && !this._amount.isNegative && hasValidSignature;
   }
@@ -58,11 +57,7 @@ class Transaction {
   }
 
   void signTransaction(PrivateKey privateKey) {
-    Signer s = Signer('SHA-256/RSA');
-    AsymmetricKeyParameter<RSAPrivateKey> privateKeyParams = PrivateKeyParameter(privateKey);
-    s.init(true, privateKeyParams);
-    RSASignature sig = s.generateSignature(utf8.encode(this.toHash()));
-    this._signature = base64Encode(sig.bytes);
+    this._signature = privateKey.createSignature(this.toHash());
   }
 
   String toHash() {

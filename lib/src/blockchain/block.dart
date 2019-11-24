@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as crypto;
+import 'package:crypton/crypton.dart';
 import 'package:gitcoin/gitcoin.dart';
-import 'package:pointycastle/export.dart';
 
 class Block {
   TransactionList data;
@@ -35,14 +35,13 @@ class Block {
   }
 
   bool get isValid {
-    RSAPublicKey publicKey = RsaKeyHelper.parsePublicKeyFromString(this.creator);
-    bool hasValidSignature = RsaKeyHelper.validateStringSignature(this.toHash(), this.signature, publicKey);
+    RSAPublicKey publicKey = RSAPublicKey.fromString(this.creator);
+    bool hasValidSignature = publicKey.verifySignature(this.toHash(), this.signature);
     return this.data.isValid && hasValidSignature;
   }
 
   void signBlock(PrivateKey privateKey) {
-    RSASignature sig= RsaKeyHelper.createSignature(this.toHash(), privateKey);
-    signature = base64Encode(sig.bytes);
+    signature = privateKey.createSignature(this.toHash());
   }
 
   String toHash() {
