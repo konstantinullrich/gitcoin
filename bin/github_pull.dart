@@ -15,7 +15,7 @@ void main() {
   for (Map entry in githubUser) {
     Wallet wallet = entry['wallet'];
     String name = entry['name'];
-    String publicKey = RsaKeyHelper.encodePublicKeyToString(wallet.publicKey);
+    String publicKey = wallet.publicKey.toString();
     GithubWorker githubWorker = GithubWorker(name, publicKey, storageManager, Broadcaster([]));
     githubWorker.generateRevenue();
   }
