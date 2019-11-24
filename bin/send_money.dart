@@ -6,7 +6,7 @@ void main() {
   StorageManager storageManager = StorageManager('./storage');
   Wallet wallet = Wallet.fromPem("./wallet/private_key", "./wallet/public_key.pub");
   String myAddress = RsaKeyHelper.encodePublicKeyToString(wallet.publicKey);
-  int yourCurrentFund = getFundsOfAddress(storageManager.BlockchainBlocks, myAddress);
+  int yourCurrentFund = getFundsOfAddress(storageManager, myAddress);
   int spending = 0;
 
 

@@ -49,7 +49,7 @@ class RestHandler {
             case WALLET:
               String walletAddress = request.uri.queryParameters["walletId"];
               request.response.write(
-                  jsonEncode({ "funds": getFundsOfAddress(blockList, walletAddress) }));
+                  jsonEncode({ "funds": getFundsOfAddress(storageManager, walletAddress) }));
               break;
           }
           break;

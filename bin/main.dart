@@ -11,7 +11,12 @@ Broadcaster broadcaster = Broadcaster([]);
 
 void runBlockchainValidator(dynamic d) {
   Blockchain blockchain = Blockchain(wallet, storageManager, broadcaster: broadcaster);
-  storageManager.storeBlockchain(blockchain);
+  if (storageManager.BlockchainBlocks.length >= 1) {
+    print("loading existing Blockchain");
+    blockchain = storageManager.storedBlockchain;
+    blockchain.creatorWallet = wallet;
+    blockchain.broadcaster = broadcaster;
+  }
   while(true) {
     if (storageManager.pendingTransactions.length > 2) {
       print("Start mining a Block");

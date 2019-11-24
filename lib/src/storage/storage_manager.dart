@@ -96,6 +96,18 @@ class StorageManager {
     return results;
   }
 
+  Blockchain get storedBlockchain {
+    List<Map> results = [];
+    var files = blockchain.listSync();
+    for (var file in files) {
+      File pblc = File(file.path);
+      results.add(jsonDecode(pblc.readAsStringSync()));
+    }
+    Blockchain blc = Blockchain.fromList(results);
+    blc.storageManager = this;
+    return blc;
+  }
+
   void storeBlockchain(Blockchain blc_chn) {
     for (Block blc in blc_chn.chain) {
       String filename = "${blc.toHash()}.blc";
