@@ -11,9 +11,7 @@ class Blockchain {
   StorageManager storageManager;
   List<Block> chain = [];
 
-  String get _proofOfWork {
-    return List(this.difficulty).join('').replaceAll('null', '0');
-  }
+  String get _proofOfWork => List(this.difficulty).join('').replaceAll('null', '0');
 
   /// Returns the Hash of the last Block of the Blockchain
   String get _previousHash => this.chain.last.toHash();

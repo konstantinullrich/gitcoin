@@ -3,7 +3,7 @@ import 'dart:isolate';
 
 import 'package:gitcoin/gitcoin.dart';
 
-Wallet wallet = Wallet.fromPem('./wallet/private_key_konsti', './wallet/public_key_konsti.pub');
+Wallet wallet = Wallet.fromPem('./wallet/private_key', './wallet/public_key.pub');
 StorageManager storageManager = StorageManager('./storage/');
 String githubUser = 'konstantinullrich';
 int webPort = 3000;
