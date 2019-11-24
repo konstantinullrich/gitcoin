@@ -89,7 +89,7 @@ class RestHandler {
                 );
                 trx.signTransaction(RsaKeyHelper.parsePrivateKeyFromString(
                     rawMap['senderKey']));
-                if (trx.isValid) storageManager.storePendingTransaction(trx);
+                storageManager.storePendingTransaction(trx);
               break;
           }
           request.response.write('You are connected to the gitcoin chain!');
