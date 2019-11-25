@@ -10,9 +10,9 @@ between users.
 # Features
 
 - Backend 100% dartlang.
-- Based on the blockchain algorithm.
+- Based on a blockchain.
 - Proof by work validation algorithm.
-- Rsa encryption and decryption.
+- EC Signing and Validation.
 - Each user is a http client and server.
 
 
@@ -20,7 +20,7 @@ between users.
 
 Gitcoin uses various libraries to improve the development process:  
 - [asn1lib :](https://pub.dev/packages/asn1lib) Encoding and decoding.  
-- [PointyCastle :](https://github.com/PointyCastle/pointycastle) RSA encryption and decryption.  
+- [Crypton :](https://pub.dev/packages/crypton) ECSignature.  
 - [http :](https://pub.dev/packages/http) Http requests.  
 - [crypto :](https://pub.dev/packages/crypto) Cryptographic hashing functions.  
 
@@ -28,27 +28,3 @@ Gitcoin uses various libraries to improve the development process:
 
 To build the project, you need:
 - [Dart Sdk](https://dart.dev/get-dart)
-
-# Setup
-
-``
-$ git clone https://github.com/konstantinullrich/gitcoin.git
-``
-
-or using ssh
-
-``
-$ git clone git@github.com:konstantinullrich/gitcoin.git
-``
-
-Download the dependencies
-
-``
-$ pub get
-``
-
-Create a new Wallet
-
-``
-$ dart bin/wallet_generator.dart
-``
