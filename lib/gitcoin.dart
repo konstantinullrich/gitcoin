@@ -18,6 +18,5 @@ export 'src/networking/rest_handler.dart';
 export 'src/storage/storage_manager.dart';
 
 // Utils
-export 'src/utils/rsa_pem.dart';
-export 'src/utils/ec_pem.dart';
+export 'src/utils/pemhelper.dart';
 export 'src/utils/blockchain_tools.dart';
