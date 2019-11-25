@@ -14,8 +14,7 @@ environment:
 dependencies:
   crypto: ^2.1.3
   http: ^0.12.0+2
-  crypton:
-    git: https://github.com/konstantinullrich/crypton.git
+  crypton: ^1.0.0
 
 dev_dependencies:
   pedantic: ^1.8.0
