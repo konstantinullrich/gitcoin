@@ -88,7 +88,7 @@ class RestHandler {
                     rawMap['toAddress'],
                     rawMap['amount']
                 );
-                trx.signTransaction(RSAPrivateKey.fromString(rawMap['senderKey']));
+                trx.signTransaction(ECPrivateKey.fromString(rawMap['senderKey']));
                 storageManager.storePendingTransaction(trx);
               break;
           }

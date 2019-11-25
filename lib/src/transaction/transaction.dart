@@ -25,7 +25,7 @@ class Transaction {
       throw('No signature in this transaction');
     }
 
-    RSAPublicKey publicKey = RSAPublicKey.fromString(this._fromAddress);
+    ECPublicKey publicKey = ECPublicKey.fromString(this._fromAddress);
     bool hasValidSignature = publicKey.verifySignature(this.toHash(), this._signature);
 
     return this._fromAddress != this._toAddress && !this._amount.isNegative && hasValidSignature;

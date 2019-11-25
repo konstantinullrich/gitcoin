@@ -4,14 +4,14 @@ import 'package:crypton/crypton.dart';
 import 'package:gitcoin/gitcoin.dart';
 
 class Wallet {
-  RSAPublicKey _publicKey;
-  RSAPrivateKey _privateKey;
+  ECPublicKey _publicKey;
+  ECPrivateKey _privateKey;
 
-  RSAPublicKey get publicKey => _publicKey;
-  RSAPrivateKey get privateKey => _privateKey;
+  ECPublicKey get publicKey => _publicKey;
+  ECPrivateKey get privateKey => _privateKey;
 
   Wallet.fromRandom() {
-    RSAKeypair keypair = RSAKeypair.fromRandom();
+    ECKeypair keypair = ECKeypair.fromRandom();
     this._publicKey = keypair.publicKey;
     this._privateKey = keypair.privateKey;
   }
@@ -23,8 +23,8 @@ class Wallet {
     if (!privateKeyFile.existsSync()) throw('\"$privateKeyFilePath\" does not exist or is not a valid path');
     if (!publicKeyFile.existsSync()) throw('\"$publicKeyFilePath\" does not exist or is not a valid path');
 
-    this._privateKey = RSAPrivateKey.fromString(decodePEM(privateKeyFile.readAsStringSync()));
-    this._publicKey = RSAPublicKey.fromString(decodePEM(publicKeyFile.readAsStringSync()));
+    this._privateKey = ECPrivateKey.fromString(decodePEM(privateKeyFile.readAsStringSync()));
+    this._publicKey = ECPublicKey.fromString(decodePEM(publicKeyFile.readAsStringSync()));
   }
 
   void saveToFile(String folderPath) {
