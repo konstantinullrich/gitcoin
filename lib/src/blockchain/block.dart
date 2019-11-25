@@ -35,7 +35,7 @@ class Block {
   }
 
   bool get isValid {
-    RSAPublicKey publicKey = RSAPublicKey.fromString(this.creator);
+    ECPublicKey publicKey = ECPublicKey.fromString(this.creator);
     bool hasValidSignature = publicKey.verifySignature(this.toHash(), this.signature);
     return this.data.isValid && hasValidSignature;
   }
