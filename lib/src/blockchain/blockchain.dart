@@ -64,9 +64,9 @@ class Blockchain {
     }
     Block block = Block(pendingTransactions, creator);
     block.previousHash = this._previousHash;
-    block.signBlock(this.creatorWallet.privateKey);
     for (int i = 0; i < this.maxNonce; i++) {
       if (block.toHash().startsWith(this._proofOfWork)) {
+        block.signBlock(this.creatorWallet.privateKey);
         this._addBlock(block);
         storageManager.deletePendingTransactions();
         return;
